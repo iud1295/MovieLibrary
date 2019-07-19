@@ -1,9 +1,3 @@
-//
-//  ViewController.swift
-//  MovieLibrary
-//
-//  Created by Ninestack on 18/07/19.
-//
 
 import UIKit
 
