@@ -5,16 +5,7 @@ import CoreLocation
 import AFNetworking
 
 extension UIViewController {
-    
-//    func setDefaultNavigationBar() {
-//        UINavigationBar.appearance().barTintColor = .white
-//        UINavigationBar.appearance().isTranslucent = true
-//        UINavigationBar.appearance().tintColor = UIColor.init(hexString: AppColors.Primary)
-//        
-//        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.black]
-//        UISearchBar.appearance().barStyle = UIBarStyle.default
-//    }
-//    
+     
     func showAlert(title : String?, message : String?) {
         let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "Ok", style: .default, handler: nil))
@@ -105,6 +96,10 @@ extension UIViewController {
                 return ""
             }
         }
+    }
+    
+    func getImageUrl(posterPath: String) -> URL {
+        return URL(string: (UserDefaults.standard.object(forKey: AppUserDefaults.ImageBaseURL) as! String + "original" + posterPath))!
     }
     
 }

@@ -181,7 +181,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieItemTableViewCell", for: indexPath) as! MovieItemTableViewCell
         
-        cell.imgPoster.sd_setImage(with: URL(string: (UserDefaults.standard.object(forKey: AppUserDefaults.ImageBaseURL) as! String + "original" + data.posterPath)), placeholderImage: UIImage.init(named: "poster"))
+        cell.imgPoster.sd_setImage(with: getImageUrl(posterPath: data.posterPath), placeholderImage: UIImage.init(named: "poster"))
         cell.lblTitle.text = data.title
         cell.lblReleaseDate.text = "Release Date : " + data.releaseDate
         cell.lblOverview.text = data.overview
@@ -192,6 +192,20 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data: MovieItem
+        if isFiltering() {
+            data = filteredMovies[indexPath.row]
+        } else {
+            data = movieList[indexPath.row]
+        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as! MovieDetailViewController
+        vc.id = data.id
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
     
 }

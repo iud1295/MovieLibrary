@@ -14,4 +14,10 @@ class PostParameters {
                 "page": 1]
     }
     
+    func getMovieDetailParams() -> NSDictionary {
+        return ["api_key": MovieDBAPIKey.Key,
+                "language": "en-US",
+                "append_to_response": "videos"]
+    }
+    
 }

@@ -29,6 +29,9 @@
 		2D3E99F422E031B00020EEB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D3E99F322E031B00020EEB8 /* Assets.xcassets */; };
 		2D3E99F722E031B00020EEB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D3E99F522E031B00020EEB8 /* LaunchScreen.storyboard */; };
 		2D3E99FF22E0321A0020EEB8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D3E99FE22E0321A0020EEB8 /* .gitignore */; };
+		2DA629DC22E1B56C00B86762 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA629DB22E1B56C00B86762 /* MovieDetailViewController.swift */; };
+		2DA629DE22E1B8E900B86762 /* MovieDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA629DD22E1B8E900B86762 /* MovieDetailModel.swift */; };
+		2DA629E022E1FA2A00B86762 /* UIButtonUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA629DF22E1FA2A00B86762 /* UIButtonUtilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +60,9 @@
 		2D3E99F622E031B00020EEB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D3E99F822E031B00020EEB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D3E99FE22E0321A0020EEB8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		2DA629DB22E1B56C00B86762 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		2DA629DD22E1B8E900B86762 /* MovieDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailModel.swift; sourceTree = "<group>"; };
+		2DA629DF22E1FA2A00B86762 /* UIButtonUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonUtilities.swift; sourceTree = "<group>"; };
 		37E1530764250BC7E219B8F0 /* Pods_MovieLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -104,6 +110,7 @@
 			children = (
 				2D1FCBB022E08C6A003FB248 /* ConfigModel.swift */,
 				2D1FCBB222E09CF3003FB248 /* MovieListModel.swift */,
+				2DA629DD22E1B8E900B86762 /* MovieDetailModel.swift */,
 			);
 			path = "Model Classes";
 			sourceTree = "<group>";
@@ -120,6 +127,7 @@
 		2D3B4AAF22E0524E009017A2 /* Utility Files */ = {
 			isa = PBXGroup;
 			children = (
+				2DA629DF22E1FA2A00B86762 /* UIButtonUtilities.swift */,
 				2D1FCBA822E081CD003FB248 /* UIViewControllerUtilities.swift */,
 				2D3B4AB022E0527B009017A2 /* UIImageViewUtilities.swift */,
 				2D3B4AB122E0527B009017A2 /* UIViewUtilities.swift */,
@@ -131,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				2D3B4AB522E06602009017A2 /* MovieListViewController.swift */,
+				2DA629DB22E1B56C00B86762 /* MovieDetailViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -316,11 +325,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D3E99EC22E031AE0020EEB8 /* ViewController.swift in Sources */,
+				2DA629DE22E1B8E900B86762 /* MovieDetailModel.swift in Sources */,
 				2D1FCBAD22E08251003FB248 /* DBCalls.swift in Sources */,
+				2DA629E022E1FA2A00B86762 /* UIButtonUtilities.swift in Sources */,
 				2D1FCBA722E07FA3003FB248 /* Constants.swift in Sources */,
 				2D3B4AAD22E04A67009017A2 /* MovieItemTableViewCell.swift in Sources */,
 				2D1FCBB122E08C6A003FB248 /* ConfigModel.swift in Sources */,
 				2D1FCBA922E081CD003FB248 /* UIViewControllerUtilities.swift in Sources */,
+				2DA629DC22E1B56C00B86762 /* MovieDetailViewController.swift in Sources */,
 				2D1FCBA422E07F73003FB248 /* APIManager.swift in Sources */,
 				2D1FCBA222E07F73003FB248 /* APICalls.swift in Sources */,
 				2D3E99EA22E031AE0020EEB8 /* AppDelegate.swift in Sources */,

@@ -68,7 +68,7 @@ class MovieItem: Codable {
         self.id = dictionary.object(forKey: CodingKeys.id.rawValue) as? Int ?? 0
         self.voteAverage = dictionary.object(forKey: CodingKeys.voteAverage.rawValue) as? Double ?? 0.0
         self.title = dictionary.object(forKey: CodingKeys.title.rawValue) as? String ?? ""
-        self.posterPath = dictionary.object(forKey: CodingKeys.posterPath.rawValue) as? String ?? ""
+        self.posterPath = dictionary.object(forKey: CodingKeys.posterPath.rawValue) as? String ?? "http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png"
         self.originalTitle = dictionary.object(forKey: CodingKeys.originalTitle.rawValue) as? String ?? ""
         self.overview = dictionary.object(forKey: CodingKeys.overview.rawValue) as? String ?? ""
         self.releaseDate = dictionary.object(forKey: CodingKeys.releaseDate.rawValue) as? String ?? ""

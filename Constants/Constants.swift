@@ -14,6 +14,7 @@ struct APIDomain {
     // MARK: - EndPoints
     static let Configuration = APIDomain.ServerUrl + APIDomain.folder + "configuration"
     static let PopularMovies = APIDomain.ServerUrl + APIDomain.folder + "movie/popular"
+    static let MovieDetails = APIDomain.ServerUrl + APIDomain.folder + "movie/"
     
 }
 
