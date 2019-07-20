@@ -8,10 +8,10 @@ class PostParameters {
         return ["api_key": MovieDBAPIKey.Key]
     }
     
-    func getPopularMovieListParams() -> NSDictionary {
+    func getPopularMovieListParams(pageNo: Int) -> NSDictionary {
         return ["api_key": MovieDBAPIKey.Key,
                 "language": "en-US",
-                "page": 1]
+                "page": pageNo]
     }
     
     func getMovieDetailParams() -> NSDictionary {

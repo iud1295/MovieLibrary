@@ -7,12 +7,16 @@ class MovieListViewController: UIViewController {
     @IBOutlet weak var tableViewMovies: UITableView!
     
     var movieList = [MovieItem]()
+    var pageNo : Int!
     var filteredMovies = [MovieItem]()
     let searchController = UISearchController(searchResultsController: nil)
+    private var refreshControlbottom: UIRefreshControl?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        pageNo = 1
         // Do any additional setup after loading the view.
         
         setupSearchBar()
@@ -22,7 +26,15 @@ class MovieListViewController: UIViewController {
         tableViewMovies.rowHeight = UITableView.automaticDimension
         
         loadData()
+        
+        refreshControlbottom = UIRefreshControl()
+        refreshControlbottom?.triggerVerticalOffset = 30
+        refreshControlbottom?.transform = CGAffineTransform(rotationAngle: (180 * .pi) / 180)
+        refreshControlbottom?.addTarget(self, action: #selector(self.refresh), for: .valueChanged)
+        tableViewMovies.bottomRefreshControl = refreshControlbottom
     }
+   
+    
     
     override func viewWillAppear(_ animated: Bool) {
         if #available(iOS 11.0, *) {
@@ -40,6 +52,15 @@ class MovieListViewController: UIViewController {
         if #available(iOS 11.0, *) {
             navigationItem.hidesSearchBarWhenScrolling = true
             self.searchController.hidesNavigationBarDuringPresentation = false
+        }
+    }
+    
+    @objc func refresh(){
+        
+        if(movieList.count > 0){
+            refreshControlbottom?.attributedTitle = NSAttributedString(string: "Fetching data...")
+            pageNo = pageNo + 1
+            getMovieList(pageNumber: pageNo)
         }
     }
     
@@ -94,7 +115,7 @@ extension MovieListViewController {
         if let recievedConfigSucces = configSuccessFlag {
             if recievedConfigSucces {
                 //make popular movie list api call
-                getMovieList()
+                getMovieList(pageNumber: pageNo)
             } else {
                 //make config api call
                 getConfigurations()
@@ -105,14 +126,34 @@ extension MovieListViewController {
         }
     }
     
-    func getMovieList() {
+    func getMovieList(pageNumber: Int) {
         //get popular movies list
-        APICalls().getMovieList { (result) in
+        APICalls().getMovieList(pageNo: pageNumber) { (result) in
             if let response = result {
-                //save response to local variable
-                self.movieList = response.results
+                
+                // Assign Page No
+                self.pageNo = response.page
+                
+                
+                if pageNumber != 1
+                {
+                    //append response to local variable
+                    for i in response.results
+                    {
+                        self.movieList.append(i)
+                    }
+                }
+                else
+                {
+                    //save response to local variable
+                    self.movieList = response.results
+                }
+               
+                
+                
                 //reload table to display the fetched results
                 self.tableViewMovies.reloadData()
+                self.refreshControlbottom?.endRefreshing()
             }
         }
     }
@@ -126,7 +167,7 @@ extension MovieListViewController {
                 
                 //save image base url to User Defaults - for image loading
                 UserDefaults.standard.set(response.images.secureBaseURL, forKey: AppUserDefaults.ImageBaseURL)
-                self.getMovieList()
+                self.getMovieList(pageNumber: self.pageNo)
             }
         }
     }
@@ -207,16 +248,6 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         vc.id = data.id
         self.navigationController?.pushViewController(vc, animated: true)
         
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.alpha = 0
-        
-        UIView.animate(withDuration: 0.3, delay: 0.01 * Double(indexPath.row), options: [], animations: {
-            cell.alpha = 1
-        }) { (true) in
-            
-        }
     }
     
 }

@@ -19,9 +19,9 @@ class APICalls {
         }
     }
 
-    func getMovieList(completion: @escaping (_ result: MovieListModel?) -> ())  {
+    func getMovieList(pageNo: Int, completion: @escaping (_ result: MovieListModel?) -> ())  {
 
-        manager.getAPICall(url: APIDomain.PopularMovies, parameters: PostParameters().getPopularMovieListParams(), authRequired: false, userToken: "") { (result, error) in
+        manager.getAPICall(url: APIDomain.PopularMovies, parameters: PostParameters().getPopularMovieListParams(pageNo: pageNo), authRequired: false, userToken: "") { (result, error) in
             if error != nil {
                 print(error ?? "")
                 completion(nil)
