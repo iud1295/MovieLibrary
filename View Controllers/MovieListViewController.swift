@@ -28,6 +28,7 @@ class MovieListViewController: UIViewController {
         if #available(iOS 11.0, *) {
             navigationItem.hidesSearchBarWhenScrolling = false
         }
+        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -206,6 +207,16 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         vc.id = data.id
         self.navigationController?.pushViewController(vc, animated: true)
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.alpha = 0
+        
+        UIView.animate(withDuration: 0.3, delay: 0.01 * Double(indexPath.row), options: [], animations: {
+            cell.alpha = 1
+        }) { (true) in
+            
+        }
     }
     
 }

@@ -1,6 +1,7 @@
 
 import UIKit
 import SDWebImage
+import AVKit
 
 class MovieDetailViewController: UIViewController {
 
@@ -15,6 +16,20 @@ class MovieDetailViewController: UIViewController {
 
     @IBAction func btnWatchTrailerTapped(_ sender: Any) {
         
+        if movieDetailsObj.videos.results.count > 0 {
+            let obj = movieDetailsObj.videos.results[0]
+            let videoURL = getVideoUrl(object: obj)
+            let player = AVPlayer(url: videoURL)
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
+            }
+        } else {
+            showToastMessage(messageString: "Video Unavailable!")
+        }
+        
+        
     }
     
     var id: Int = 0
@@ -24,15 +39,22 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getMovieDetails()
+        
+        self.navigationController?.navigationBar.prefersLargeTitles = false
     }
     
 }
 
 extension MovieDetailViewController {
+    
+    @objc func playerDidFinishPlaying() {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     func getMovieDetails() {
         APICalls().getMovieDetails(id: id) { (result) in

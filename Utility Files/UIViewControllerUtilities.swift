@@ -102,6 +102,19 @@ extension UIViewController {
         return URL(string: (UserDefaults.standard.object(forKey: AppUserDefaults.ImageBaseURL) as! String + "original" + posterPath))!
     }
     
+    func getVideoUrl(object: Result) -> URL {
+        if object.site.lowercased() == "youtube" {
+            
+            print("https://www.youtube.com/watch?v=\(object.key)")
+            
+            return URL(string: ("https://www.youtube.com/watch?v=" + object.key))!
+        } else if object.site.lowercased() == "vimeo" {
+            return URL(string: ("https://vimeo.com/" + object.key))!
+        }
+        return URL.init(string: "")!
+        
+    }
+    
 }
 
 extension UIApplication {
