@@ -1,7 +1,6 @@
 
 import Foundation
 import UIKit
-import CoreLocation
 import AFNetworking
 
 extension UIViewController {
@@ -34,68 +33,40 @@ extension UIViewController {
         }
     }
     
-    func getDocumentsURL() -> String {
-        let documentsURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]//FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        return documentsURL
-    }
-    
-    func fileInDocumentsDirectory(filename: String) -> String {
+    func getFullDate(date: String) -> String {
+        let isoFormatter = DateFormatter()
+        isoFormatter.dateFormat = "yyyy-MM-dd"
+        // initially set the format based on your datepicker date / server String
         
-        let fileURL = URL.init(string: getDocumentsURL())?.appendingPathComponent(filename)
-        return fileURL!.path
+        // convert your string to date
+        let yourDate = isoFormatter.date(from: date)!
+        
+        let formatter = DateFormatter()
+        //then again set the date format whhich type of output you need
+        formatter.dateFormat = "dd MMMM YYYY"
+        // again convert your date to string
+        let formattedString = formatter.string(from: yourDate)
+
+        return formattedString
         
     }
     
-    func saveImageToDocumentsDirectory(name: String, image: UIImage) -> Bool {
-        let path = getDocumentsDirectoryPath(filename: name)
+    func getDateYear(date: String) -> String {
+        let isoFormatter = DateFormatter()
+        isoFormatter.dateFormat = "yyyy-MM-dd"
+        // initially set the format based on your datepicker date / server String
         
-        let imgData = image.pngData()! as NSData
-        let result = imgData.write(toFile: path, atomically: true)
-        return result
-    }
-    
-    func getImageFromDocumentsDirectory(name: String) -> UIImage? {
-        let path = getDocumentsDirectoryPath(filename: name)
+        // convert your string to date
+        let yourDate = isoFormatter.date(from: date)!
         
-        if let image = UIImage(contentsOfFile: path) {
-            return image
-        } else {
-            return nil
-        }
-    }
-    
-    func deleteImageInDocumentsDirectory(name: String)  {
-        let filePath = self.getDocumentsDirectoryPath(filename: name)
+        let formatter = DateFormatter()
+        //then again set the date format whhich type of output you need
+        formatter.dateFormat = "YYYY"
+        // again convert your date to string
+        let formattedString = formatter.string(from: yourDate)
         
-        if (FileManager.default.fileExists(atPath: filePath)) {
-            do {
-                try FileManager.default.removeItem(atPath: filePath)
-            }
-            catch let error as NSError {
-                print("Ooops! Something went wrong: \(error)")
-            }
-        }
-    }
-    
-    func getDocumentsDirectoryPath(filename: String) -> String {
-        let documentsURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        let fileURL = URL.init(string: documentsURL)?.appendingPathComponent(filename)
-        return fileURL!.path
-    }
-    
-    func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) -> String {
-        if let error = error {
-            print("Unable to Reverse Geocode Location (\(error))")
-            print("Unable to Find Address for Location")
-            return ""
-        } else {
-            if let placemarks = placemarks, let placemark = placemarks.first {
-                return placemark.compactAddress!
-            } else {
-                print("No Matching Addresses Found")
-                return ""
-            }
-        }
+        return formattedString
+        
     }
     
     func getImageUrl(posterPath: String) -> URL {
@@ -133,29 +104,6 @@ extension UIApplication {
             return topViewController(controller: presented)
         }
         return controller
-    }
-    
-}
-
-
-extension CLPlacemark {
-    
-    var compactAddress: String? {
-        
-        if let name = name {
-            var result = name
-//            if let street = thoroughfare {
-//                result += ", \(street)"
-//            }
-            if let subLocality = subLocality {
-                result += ", \(subLocality)"
-            }
-//            if let locality = locality {
-//                result += ", \(locality)"
-//            }
-            return result
-        }
-        return nil
     }
     
 }

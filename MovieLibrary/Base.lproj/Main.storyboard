@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Medium</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Popular Movies-->
         <scene sceneID="tne-QT-ifu">
@@ -29,12 +34,77 @@
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="36k-gz-XBP"/>
                                         </connections>
                                     </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nuq-IV-vTf" userLabel="No data View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noData" translatesAutoresizingMaskIntoConstraints="NO" id="ILO-jd-0vp">
+                                                <rect key="frame" x="127.5" y="135.5" width="120" height="120"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="ILO-jd-0vp" secondAttribute="height" multiplier="1:1" id="9F3-L5-keV"/>
+                                                    <constraint firstAttribute="height" constant="120" id="EBT-Hb-nH0"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops ! Something went wrong." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boG-JP-2gv">
+                                                <rect key="frame" x="73.5" y="265.5" width="228" height="19.5"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MdR-0l-idm" customClass="ButtonWithBorder" customModule="MovieLibrary" customModuleProvider="target">
+                                                <rect key="frame" x="94" y="351" width="187.5" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="SL5-CW-VAz"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.35397011039999998" green="0.79949510099999999" blue="0.72771269080000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Refresh"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" red="0.35397011039999998" green="0.79949510099999999" blue="0.72771269080000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="2"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="btnRefreshTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jvt-E1-BS2"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLb-F8-mJV">
+                                                <rect key="frame" x="5" y="293" width="365" height="33"/>
+                                                <string key="text">Brace yourself till we get the error fixed.
+You may also refresh the page or try again later</string>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="wLb-F8-mJV" firstAttribute="top" secondItem="boG-JP-2gv" secondAttribute="bottom" constant="8" id="8mp-Uz-Fqn"/>
+                                            <constraint firstItem="wLb-F8-mJV" firstAttribute="leading" secondItem="Nuq-IV-vTf" secondAttribute="leading" constant="5" id="9Pq-hr-aIg"/>
+                                            <constraint firstItem="wLb-F8-mJV" firstAttribute="centerX" secondItem="boG-JP-2gv" secondAttribute="centerX" id="JbC-5i-gEL"/>
+                                            <constraint firstItem="ILO-jd-0vp" firstAttribute="centerY" secondItem="Nuq-IV-vTf" secondAttribute="centerY" constant="-80" id="KaE-kC-h90"/>
+                                            <constraint firstItem="MdR-0l-idm" firstAttribute="centerX" secondItem="Nuq-IV-vTf" secondAttribute="centerX" id="SsN-d5-bz0"/>
+                                            <constraint firstAttribute="trailing" secondItem="wLb-F8-mJV" secondAttribute="trailing" constant="5" id="hTK-Rf-B7C"/>
+                                            <constraint firstItem="MdR-0l-idm" firstAttribute="width" secondItem="Nuq-IV-vTf" secondAttribute="width" multiplier="0.5" id="iVT-Fj-awQ"/>
+                                            <constraint firstItem="boG-JP-2gv" firstAttribute="top" secondItem="ILO-jd-0vp" secondAttribute="bottom" constant="10" id="tjY-P2-099"/>
+                                            <constraint firstItem="ILO-jd-0vp" firstAttribute="centerX" secondItem="Nuq-IV-vTf" secondAttribute="centerX" id="yHV-6f-8Fe"/>
+                                            <constraint firstItem="MdR-0l-idm" firstAttribute="top" secondItem="wLb-F8-mJV" secondAttribute="bottom" constant="25" id="ycB-s1-khw"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="ybs-uq-0EF" secondAttribute="trailing" id="CoB-G5-Q9a"/>
+                                    <constraint firstItem="Nuq-IV-vTf" firstAttribute="top" secondItem="ESr-aT-SKb" secondAttribute="top" id="Pcj-dw-8BB"/>
+                                    <constraint firstAttribute="bottom" secondItem="Nuq-IV-vTf" secondAttribute="bottom" id="S3e-9L-YvV"/>
                                     <constraint firstAttribute="bottom" secondItem="ybs-uq-0EF" secondAttribute="bottom" id="XOG-p5-aVz"/>
                                     <constraint firstItem="ybs-uq-0EF" firstAttribute="top" secondItem="ESr-aT-SKb" secondAttribute="top" id="nkA-Cd-ZVk"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nuq-IV-vTf" secondAttribute="trailing" id="pBm-eQ-fiG"/>
+                                    <constraint firstItem="Nuq-IV-vTf" firstAttribute="leading" secondItem="ESr-aT-SKb" secondAttribute="leading" id="vVD-gu-jLw"/>
                                     <constraint firstItem="ybs-uq-0EF" firstAttribute="leading" secondItem="ESr-aT-SKb" secondAttribute="leading" id="xQl-6S-oBl"/>
                                 </constraints>
                             </view>
@@ -51,6 +121,7 @@
                     <navigationItem key="navigationItem" title="Popular Movies" id="9Z3-Rj-38Q"/>
                     <connections>
                         <outlet property="tableViewMovies" destination="ybs-uq-0EF" id="9of-lK-xbC"/>
+                        <outlet property="vwNoData" destination="Nuq-IV-vTf" id="69h-DY-gBC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -72,7 +143,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adC-E0-og1">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="542.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="541.5"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="en5-y0-VbQ">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="260"/>
@@ -143,17 +214,17 @@
                                                             <action selector="btnWatchTrailerTapped:" destination="BZ1-ZQ-pmW" eventType="touchUpInside" id="sxU-gb-y8H"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSX-0b-EgQ">
-                                                        <rect key="frame" x="20" y="320.5" width="335" height="25"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSX-0b-EgQ">
+                                                        <rect key="frame" x="20" y="320.5" width="335" height="24"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="25" id="Mlv-Bg-g7S"/>
+                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="d6A-ax-wo2"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yO-WA-SkP">
-                                                        <rect key="frame" x="20" y="355.5" width="335" height="17"/>
+                                                        <rect key="frame" x="20" y="354.5" width="335" height="17"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="17" id="50N-ew-3aK"/>
                                                         </constraints>
@@ -162,7 +233,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbf-IA-0o6" customClass="CircularViewWithShadow" customModule="MovieLibrary" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="382.5" width="62" height="27"/>
+                                                        <rect key="frame" x="20" y="381.5" width="62" height="27"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 mins" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4dr-2R-8b0">
                                                                 <rect key="frame" x="8" y="2" width="46" height="23"/>
@@ -181,7 +252,7 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCB-43-Zvh">
-                                                        <rect key="frame" x="20" y="424.5" width="335" height="38.5"/>
+                                                        <rect key="frame" x="20" y="423.5" width="335" height="38.5"/>
                                                         <string key="text">-
 </string>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
@@ -189,7 +260,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Produced By: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sc-7C-aEm">
-                                                        <rect key="frame" x="20" y="483" width="112" height="20.5"/>
+                                                        <rect key="frame" x="20" y="482" width="112" height="20.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="112" id="Llo-Wv-DM8"/>
                                                         </constraints>
@@ -198,7 +269,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vou-Hc-hJm">
-                                                        <rect key="frame" x="140" y="483" width="215" height="19.5"/>
+                                                        <rect key="frame" x="140" y="482" width="215" height="19.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
                                                         <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -281,6 +352,21 @@
             </objects>
             <point key="canvasLocation" x="1909.5999999999999" y="131.78410794602701"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="IND-oB-JZ6">
+            <objects>
+                <viewController id="yfD-ML-OAn" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7po-iI-wqd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Q2U-MW-l4m"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3fw-jX-b2p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2762" y="134"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dil-QW-f5f">
             <objects>
@@ -310,6 +396,7 @@
     </scenes>
     <resources>
         <image name="cut" width="858" height="231"/>
+        <image name="noData" width="150" height="150"/>
         <image name="placeholder" width="480" height="310"/>
         <image name="poster" width="600" height="850"/>
     </resources>

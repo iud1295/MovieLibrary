@@ -36,7 +36,7 @@ class Images: Codable {
     
     init(dictionary: NSDictionary) {
         self.baseURL = dictionary.object(forKey: CodingKeys.baseURL.rawValue) as? String ?? ""
-        self.secureBaseURL = dictionary.object(forKey: CodingKeys.baseURL.rawValue) as? String ?? ""
+        self.secureBaseURL = dictionary.object(forKey: CodingKeys.secureBaseURL.rawValue) as? String ?? ""
     }
     
 }

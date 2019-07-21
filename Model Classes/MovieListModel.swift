@@ -1,5 +1,6 @@
 
 import Foundation
+import CoreData
 
 // MARK: - MovieListModel
 class MovieListModel: Codable {
@@ -72,6 +73,16 @@ class MovieItem: Codable {
         self.originalTitle = dictionary.object(forKey: CodingKeys.originalTitle.rawValue) as? String ?? ""
         self.overview = dictionary.object(forKey: CodingKeys.overview.rawValue) as? String ?? ""
         self.releaseDate = dictionary.object(forKey: CodingKeys.releaseDate.rawValue) as? String ?? ""
+    }
+    
+    init(object: NSManagedObject) {
+        self.id = object.value(forKey: CodingKeys.id.rawValue) as? Int ?? 0
+        self.voteAverage = object.value(forKey: CodingKeys.voteAverage.rawValue) as? Double ?? 0.0
+        self.title = object.value(forKey: CodingKeys.title.rawValue) as? String ?? ""
+        self.posterPath = object.value(forKey: CodingKeys.posterPath.rawValue) as? String ?? "http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png"
+        self.originalTitle = object.value(forKey: CodingKeys.originalTitle.rawValue) as? String ?? ""
+        self.overview = object.value(forKey: CodingKeys.overview.rawValue) as? String ?? ""
+        self.releaseDate = object.value(forKey: CodingKeys.releaseDate.rawValue) as? String ?? ""
     }
     
 }

@@ -11,6 +11,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        //Movies apis cache the responses hence remove all the cached responses
+        URLCache.shared.removeAllCachedResponses()
+        
         return true
     }
 

@@ -70,7 +70,7 @@ extension MovieDetailViewController {
         imgBackground.sd_setImage(with: getImageUrl(posterPath: movieDetailsObj.backdropPath), placeholderImage: UIImage.init(named: "placeholder"))
         imgPoster.sd_setImage(with: getImageUrl(posterPath: movieDetailsObj.posterPath), placeholderImage: UIImage.init(named: "poster"))
         lblAverage.text = "\(movieDetailsObj.voteAverage)"
-        lblTitle.text = movieDetailsObj.title
+        lblTitle.text = movieDetailsObj.title + " (\(getDateYear(date: movieDetailsObj.releaseDate))) "
         
         var genre = ""
         for (i,j) in movieDetailsObj.genres.enumerated() {

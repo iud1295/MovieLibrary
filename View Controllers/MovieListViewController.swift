@@ -5,6 +5,11 @@ import SDWebImage
 class MovieListViewController: UIViewController {
 
     @IBOutlet weak var tableViewMovies: UITableView!
+    @IBOutlet weak var vwNoData: UIView!
+    
+    @IBAction func btnRefreshTapped(_ sender: UIButton) {
+        loadData()
+    }
     
     var movieList = [MovieItem]()
     var pageNo : Int!
@@ -20,22 +25,15 @@ class MovieListViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         setupSearchBar()
+        registerCells()
+        addBottomRefreshControl()
         
-        tableViewMovies.register(UINib.init(nibName: "MovieItemTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieItemTableViewCell")
-        tableViewMovies.estimatedRowHeight = 100
-        tableViewMovies.rowHeight = UITableView.automaticDimension
+        handleViews(showTable: true)
         
         loadData()
         
-        refreshControlbottom = UIRefreshControl()
-        refreshControlbottom?.triggerVerticalOffset = 30
-        refreshControlbottom?.transform = CGAffineTransform(rotationAngle: (180 * .pi) / 180)
-        refreshControlbottom?.addTarget(self, action: #selector(self.refresh), for: .valueChanged)
-        tableViewMovies.bottomRefreshControl = refreshControlbottom
     }
    
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         if #available(iOS 11.0, *) {
             navigationItem.hidesSearchBarWhenScrolling = false
@@ -54,16 +52,7 @@ class MovieListViewController: UIViewController {
             self.searchController.hidesNavigationBarDuringPresentation = false
         }
     }
-    
-    @objc func refresh(){
-        
-        if(movieList.count > 0){
-            refreshControlbottom?.attributedTitle = NSAttributedString(string: "Fetching data...")
-            pageNo = pageNo + 1
-            getMovieList(pageNumber: pageNo)
-        }
-    }
-    
+
 }
 
 extension MovieListViewController {
@@ -106,6 +95,30 @@ extension MovieListViewController {
         definesPresentationContext = false
     }
     
+    func registerCells() {
+        tableViewMovies.register(UINib.init(nibName: "MovieItemTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieItemTableViewCell")
+        tableViewMovies.estimatedRowHeight = 100
+        tableViewMovies.rowHeight = UITableView.automaticDimension
+    }
+    
+    func addBottomRefreshControl() {
+        refreshControlbottom = UIRefreshControl()
+        refreshControlbottom?.triggerVerticalOffset = 30
+        refreshControlbottom?.transform = CGAffineTransform(rotationAngle: (180 * .pi) / 180)
+        refreshControlbottom?.addTarget(self, action: #selector(self.refresh), for: .valueChanged)
+        tableViewMovies.bottomRefreshControl = refreshControlbottom
+    }
+    
+    @objc func refresh(){
+        
+        if(movieList.count > 0){
+            refreshControlbottom?.attributedTitle = NSAttributedString(string: "Loading Movies")
+            
+            pageNo = pageNo + 1
+            getMovieList(pageNumber: pageNo)
+        }
+    }
+    
     func loadData() {
         
         // set to true if config api returns success response
@@ -126,51 +139,116 @@ extension MovieListViewController {
         }
     }
     
-    func getMovieList(pageNumber: Int) {
-        //get popular movies list
-        APICalls().getMovieList(pageNo: pageNumber) { (result) in
-            if let response = result {
-                
-                // Assign Page No
-                self.pageNo = response.page
-                
-                
-                if pageNumber != 1
-                {
-                    //append response to local variable
-                    for i in response.results
-                    {
-                        self.movieList.append(i)
-                    }
-                }
-                else
-                {
-                    //save response to local variable
-                    self.movieList = response.results
-                }
-               
-                
-                
-                //reload table to display the fetched results
-                self.tableViewMovies.reloadData()
-                self.refreshControlbottom?.endRefreshing()
-            }
-        }
-    }
-    
     func getConfigurations(fromMovieListController: Bool = false) {
         APICalls().getConfigurations { (result) in
             if let response = result {
-                
                 
                 UserDefaults.standard.set(true, forKey: AppUserDefaults.RecievedConfigSucces)
                 
                 //save image base url to User Defaults - for image loading
                 UserDefaults.standard.set(response.images.secureBaseURL, forKey: AppUserDefaults.ImageBaseURL)
                 self.getMovieList(pageNumber: self.pageNo)
+            } else {
+                self.handleViews(showTable: false)
             }
         }
     }
+    
+    func getMovieList(pageNumber: Int) {
+        //get popular movies list
+        APICalls().getMovieList(pageNo: pageNumber) { (result) in
+            
+            self.refreshControlbottom?.endRefreshing()
+            
+            if let response = result {
+                
+                // Assign Page No
+                self.pageNo = response.page
+                
+                if pageNumber != 1 {
+                    //append response to local variable
+                    for i in response.results {
+                        self.movieList.append(i)
+                    }
+                } else {
+                    //save response to local variable
+                    self.movieList = response.results
+                }
+                
+                //delete all movies from db
+                //save new data from movieList to db
+                self.deleteAndAddNewListToMovieTable(list: self.movieList)
+                
+                self.checkDataList()
+                
+            } else {
+                //retrieve data list from db
+                if self.movieList.count == 0 {
+                    print("from db")
+                    self.retrieveRecordsFromDB()
+                }
+                
+            }
+            
+            
+        }
+    }
+    
+    func checkDataList() {
+        if self.movieList.count > 0 {
+            self.handleViews(showTable: true)
+            //reload table to display the fetched results
+            self.tableViewMovies.reloadData()
+        } else {
+            self.handleViews(showTable: false)
+        }
+    }
+    
+    func handleViews(showTable: Bool) {
+        if showTable && self.tableViewMovies.isHidden == true {
+            self.tableViewMovies.isHidden = false
+            self.vwNoData.isHidden = true
+        } else {
+            self.tableViewMovies.isHidden = true
+            self.vwNoData.isHidden = false
+        }
+    }
+    
+    func deleteAndAddNewListToMovieTable(list: [MovieItem]) {
+    
+        DBManager().deleteAllRecords(entityName: DatabaseTables.Movies) { (result, error) in
+            if result {
+                
+                var dataList = [[String: Any]]()
+                for i in list {
+                    dataList.append(i.dictionary ?? [:])
+                }
+                
+                DBManager().addRecords(entityName: DatabaseTables.Movies, dataList: dataList, completion: { (result, error) in
+                    if result {
+                        print("Movies list saved to local db.")
+                    }
+                })
+                
+            }
+        }
+    }
+    
+    func retrieveRecordsFromDB() {
+        DBManager().retrieveRecord(entityName: DatabaseTables.Movies) { (result, error) in
+            
+            if let response = result {
+                var temp = [MovieItem]()
+                for i in response {
+                    temp.append(MovieItem.init(object: i))
+                }
+                self.movieList = temp
+            } 
+            self.checkDataList()
+        }
+    }
+    
+    
     
 }
 
@@ -225,7 +303,7 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.imgPoster.sd_setImage(with: getImageUrl(posterPath: data.posterPath), placeholderImage: UIImage.init(named: "poster"))
         cell.lblTitle.text = data.title
-        cell.lblReleaseDate.text = "Release Date : " + data.releaseDate
+        cell.lblReleaseDate.text = "Release Date : " + getFullDate(date: data.releaseDate)
         cell.lblOverview.text = data.overview
         cell.lblAverage.text = "\(data.voteAverage)"
 
@@ -237,16 +315,21 @@ extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data: MovieItem
-        if isFiltering() {
-            data = filteredMovies[indexPath.row]
-        } else {
-            data = movieList[indexPath.row]
-        }
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as! MovieDetailViewController
-        vc.id = data.id
-        self.navigationController?.pushViewController(vc, animated: true)
+        if NetworkReachability.isConnectedToNetwork() {
+            let data: MovieItem
+            if isFiltering() {
+                data = filteredMovies[indexPath.row]
+            } else {
+                data = movieList[indexPath.row]
+            }
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as! MovieDetailViewController
+            vc.id = data.id
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            showToastMessage(messageString: "No internet connection.")
+        }
         
     }
     

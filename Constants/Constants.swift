@@ -4,7 +4,7 @@ import UIKit
 
 struct APIDomain {
     // MARK: - Development Url
-    static let ServerUrl = "https://api.themoviedb.org/"
+    static let ServerUrl = "http://api.themoviedb.org/"
     
     // MARK: - Production Url
     //    static let ServerUrl = ""
@@ -18,18 +18,9 @@ struct APIDomain {
     
 }
 
-
 struct AppUserDefaults {
     static let RecievedConfigSucces = "recievedConfigSucces"
     static let ImageBaseURL = "imageBaseURL"
-}
-
-struct AppColors {
-//    static let Primary = UIColor.init(hexString: "#938FFA")
-}
-
-struct AppNotifications {
-    static let RefreshMovieList = "refreshMovieList"
 }
 
 struct MovieDBAPIKey {
@@ -37,6 +28,5 @@ struct MovieDBAPIKey {
 }
 
 struct DatabaseTables {
-    static let Config = "Config"
     static let Movies = "Movies"
 }
