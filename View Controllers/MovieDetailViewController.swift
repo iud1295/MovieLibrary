@@ -15,26 +15,20 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var lblProductionCompanies: UILabel!
 
     @IBAction func btnWatchTrailerTapped(_ sender: Any) {
-        
-        if movieDetailsObj.videos.results.count > 0 {
-            
-            let obj = movieDetailsObj.videos.results[0]
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
-            vc.key = obj.key
-            self.navigationController?.pushViewController(vc, animated: true)
-//
-//            let videoURL = getVideoUrl(object: obj)
-//            let player = AVPlayer(url: videoURL)
-//            let playerViewController = AVPlayerViewController()
-//            playerViewController.player = player
-//            self.present(playerViewController, animated: true) {
-//                playerViewController.player!.play()
-//            }
+        if NetworkReachability.isConnectedToNetwork() {
+            let arr = movieDetailsObj.videos.results
+            if arr.count > 0 && (arr[0].site.lowercased() == "youtube") {
+                
+                let obj = movieDetailsObj.videos.results[0]
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
+                vc.key = obj.key
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                showToastMessage(messageString: "Video Unavailable!")
+            }
         } else {
-            showToastMessage(messageString: "Video Unavailable!")
+            showToastMessage(messageString: "No internet connection.")
         }
-        
-        
     }
     
     var id: Int = 0
