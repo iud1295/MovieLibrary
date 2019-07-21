@@ -8,5 +8,6 @@ target 'MovieLibrary' do
   # Pods for MovieLibrary
   pod 'AFNetworking', '3.2.1'
   pod 'SDWebImage', '4.4.2'
+  pod 'YoutubePlayer-in-WKWebView', '0.3.0'
 
 end

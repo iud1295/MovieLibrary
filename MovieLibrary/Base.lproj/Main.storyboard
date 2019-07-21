@@ -352,16 +352,31 @@ You may also refresh the page or try again later</string>
             </objects>
             <point key="canvasLocation" x="1909.5999999999999" y="131.78410794602701"/>
         </scene>
-        <!--View Controller-->
+        <!--Player View Controller-->
         <scene sceneID="IND-oB-JZ6">
             <objects>
-                <viewController id="yfD-ML-OAn" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlayerViewController" id="yfD-ML-OAn" customClass="PlayerViewController" customModule="MovieLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7po-iI-wqd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7vR-XT-ILO" customClass="WKYTPlayerView">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7vR-XT-ILO" firstAttribute="leading" secondItem="Q2U-MW-l4m" secondAttribute="leading" id="8GO-rD-K3T"/>
+                            <constraint firstItem="7vR-XT-ILO" firstAttribute="top" secondItem="Q2U-MW-l4m" secondAttribute="top" id="DEU-FN-cdK"/>
+                            <constraint firstItem="Q2U-MW-l4m" firstAttribute="bottom" secondItem="7vR-XT-ILO" secondAttribute="bottom" id="qC2-iq-bOk"/>
+                            <constraint firstItem="Q2U-MW-l4m" firstAttribute="trailing" secondItem="7vR-XT-ILO" secondAttribute="trailing" id="qvL-2b-3QB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Q2U-MW-l4m"/>
                     </view>
+                    <connections>
+                        <outlet property="youtubePlayer" destination="7vR-XT-ILO" id="xIP-MG-1rX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3fw-jX-b2p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

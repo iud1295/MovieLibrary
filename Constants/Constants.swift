@@ -4,7 +4,7 @@ import UIKit
 
 struct APIDomain {
     // MARK: - Development Url
-    static let ServerUrl = "http://api.themoviedb.org/"
+    static let ServerUrl = "https://api.themoviedb.org/"
     
     // MARK: - Production Url
     //    static let ServerUrl = ""

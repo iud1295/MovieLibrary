@@ -12,7 +12,7 @@ class MovieListViewController: UIViewController {
     }
     
     var movieList = [MovieItem]()
-    var pageNo : Int!
+    var pageNo: Int = 0
     var filteredMovies = [MovieItem]()
     let searchController = UISearchController(searchResultsController: nil)
     private var refreshControlbottom: UIRefreshControl?
@@ -21,7 +21,6 @@ class MovieListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        pageNo = 1
         // Do any additional setup after loading the view.
         
         setupSearchBar()
@@ -113,9 +112,7 @@ extension MovieListViewController {
         
         if(movieList.count > 0){
             refreshControlbottom?.attributedTitle = NSAttributedString(string: "Loading Movies")
-            
-            pageNo = pageNo + 1
-            getMovieList(pageNumber: pageNo)
+            getMovieList()
         }
     }
     
@@ -128,7 +125,7 @@ extension MovieListViewController {
         if let recievedConfigSucces = configSuccessFlag {
             if recievedConfigSucces {
                 //make popular movie list api call
-                getMovieList(pageNumber: pageNo)
+                getMovieList()
             } else {
                 //make config api call
                 getConfigurations()
@@ -147,39 +144,38 @@ extension MovieListViewController {
                 
                 //save image base url to User Defaults - for image loading
                 UserDefaults.standard.set(response.images.secureBaseURL, forKey: AppUserDefaults.ImageBaseURL)
-                self.getMovieList(pageNumber: self.pageNo)
+                self.getMovieList()
             } else {
                 self.handleViews(showTable: false)
             }
         }
     }
     
-    func getMovieList(pageNumber: Int) {
+    func getMovieList() {
         //get popular movies list
-        APICalls().getMovieList(pageNo: pageNumber) { (result) in
+        APICalls().getMovieList(pageNo: pageNo+1) { (result) in
             
             self.refreshControlbottom?.endRefreshing()
             
             if let response = result {
                 
-                // Assign Page No
-                self.pageNo = response.page
-                
-                if pageNumber != 1 {
+                if self.pageNo+1 == 1 {
+                    //save response to local variable
+                    self.movieList = response.results
+                } else {
                     //append response to local variable
                     for i in response.results {
                         self.movieList.append(i)
                     }
-                } else {
-                    //save response to local variable
-                    self.movieList = response.results
                 }
+                self.checkDataList()
+                
+                // Assign Page No
+                self.pageNo = response.page
                 
                 //delete all movies from db
                 //save new data from movieList to db
                 self.deleteAndAddNewListToMovieTable(list: self.movieList)
-                
-                self.checkDataList()
                 
             } else {
                 //retrieve data list from db
@@ -205,7 +201,7 @@ extension MovieListViewController {
     }
     
     func handleViews(showTable: Bool) {
-        if showTable && self.tableViewMovies.isHidden == true {
+        if showTable && !self.tableViewMovies.isHidden {
             self.tableViewMovies.isHidden = false
             self.vwNoData.isHidden = true
         } else {
@@ -243,7 +239,7 @@ extension MovieListViewController {
                     temp.append(MovieItem.init(object: i))
                 }
                 self.movieList = temp
-            } 
+            }
             self.checkDataList()
         }
     }

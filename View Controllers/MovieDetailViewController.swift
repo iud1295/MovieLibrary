@@ -17,14 +17,19 @@ class MovieDetailViewController: UIViewController {
     @IBAction func btnWatchTrailerTapped(_ sender: Any) {
         
         if movieDetailsObj.videos.results.count > 0 {
+            
             let obj = movieDetailsObj.videos.results[0]
-            let videoURL = getVideoUrl(object: obj)
-            let player = AVPlayer(url: videoURL)
-            let playerViewController = AVPlayerViewController()
-            playerViewController.player = player
-            self.present(playerViewController, animated: true) {
-                playerViewController.player!.play()
-            }
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
+            vc.key = obj.key
+            self.navigationController?.pushViewController(vc, animated: true)
+//
+//            let videoURL = getVideoUrl(object: obj)
+//            let player = AVPlayer(url: videoURL)
+//            let playerViewController = AVPlayerViewController()
+//            playerViewController.player = player
+//            self.present(playerViewController, animated: true) {
+//                playerViewController.player!.play()
+//            }
         } else {
             showToastMessage(messageString: "Video Unavailable!")
         }
