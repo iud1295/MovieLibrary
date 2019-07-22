@@ -380,7 +380,7 @@ You may also refresh the page or try again later</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3fw-jX-b2p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2762" y="134"/>
+            <point key="canvasLocation" x="2760.8000000000002" y="133.5832083958021"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dil-QW-f5f">

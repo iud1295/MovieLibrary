@@ -15,6 +15,14 @@ class PlayerViewController: UIViewController {
         youtubePlayer.delegate = self
         youtubePlayer.load(withVideoId: key)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.landscape, andRotateTo: UIInterfaceOrientation.landscapeLeft)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.all)
+    }
    
 }
 

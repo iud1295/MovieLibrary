@@ -29,6 +29,8 @@
 		2D3E99F422E031B00020EEB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D3E99F322E031B00020EEB8 /* Assets.xcassets */; };
 		2D3E99F722E031B00020EEB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D3E99F522E031B00020EEB8 /* LaunchScreen.storyboard */; };
 		2D3E99FF22E0321A0020EEB8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D3E99FE22E0321A0020EEB8 /* .gitignore */; };
+		2D784BA322E5987900947402 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D784BA222E5987900947402 /* ActivityIndicator.swift */; };
+		2D784BA522E59A9F00947402 /* UIColorUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D784BA422E59A9F00947402 /* UIColorUtilities.swift */; };
 		2DA629DC22E1B56C00B86762 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA629DB22E1B56C00B86762 /* MovieDetailViewController.swift */; };
 		2DA629DE22E1B8E900B86762 /* MovieDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA629DD22E1B8E900B86762 /* MovieDetailModel.swift */; };
 		2DA629E022E1FA2A00B86762 /* UIButtonUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA629DF22E1FA2A00B86762 /* UIButtonUtilities.swift */; };
@@ -64,6 +66,8 @@
 		2D3E99F622E031B00020EEB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D3E99F822E031B00020EEB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D3E99FE22E0321A0020EEB8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		2D784BA222E5987900947402 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		2D784BA422E59A9F00947402 /* UIColorUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorUtilities.swift; sourceTree = "<group>"; };
 		2DA629DB22E1B56C00B86762 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		2DA629DD22E1B8E900B86762 /* MovieDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailModel.swift; sourceTree = "<group>"; };
 		2DA629DF22E1FA2A00B86762 /* UIButtonUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonUtilities.swift; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 				2D326F4D22E30B33009EC6AE /* UIScrollView+BottomRefreshControl.m */,
 				2D326F4C22E30B32009EC6AE /* MovieLibrary-Bridging-Header.h */,
 				2DF6007022E477F300D0A6DD /* NetworkReachability.swift */,
+				2D784BA222E5987900947402 /* ActivityIndicator.swift */,
+				2D784BA422E59A9F00947402 /* UIColorUtilities.swift */,
 			);
 			path = "Utility Files";
 			sourceTree = "<group>";
@@ -314,6 +320,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MovieLibrary/Pods-MovieLibrary-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/YoutubePlayer-in-WKWebView/YoutubePlayer_in_WKWebView.framework",
 			);
@@ -322,6 +329,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubePlayer_in_WKWebView.framework",
 			);
@@ -349,10 +357,12 @@
 				2DA629DC22E1B56C00B86762 /* MovieDetailViewController.swift in Sources */,
 				2D1FCBA422E07F73003FB248 /* APIManager.swift in Sources */,
 				2D1FCBA222E07F73003FB248 /* APICalls.swift in Sources */,
+				2D784BA522E59A9F00947402 /* UIColorUtilities.swift in Sources */,
 				2D3E99EA22E031AE0020EEB8 /* AppDelegate.swift in Sources */,
 				2D3E99F222E031AE0020EEB8 /* MovieLibrary.xcdatamodeld in Sources */,
 				2D1FCBA322E07F73003FB248 /* PostParameters.swift in Sources */,
 				2D3B4AB622E06602009017A2 /* MovieListViewController.swift in Sources */,
+				2D784BA322E5987900947402 /* ActivityIndicator.swift in Sources */,
 				2D1FCBB322E09CF3003FB248 /* MovieListModel.swift in Sources */,
 				2DF6007322E48E7700D0A6DD /* PlayerViewController.swift in Sources */,
 				2D3B4AB222E0527B009017A2 /* UIImageViewUtilities.swift in Sources */,

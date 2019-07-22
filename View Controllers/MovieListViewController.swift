@@ -27,7 +27,7 @@ class MovieListViewController: UIViewController {
         registerCells()
         addBottomRefreshControl()
         
-        handleViews(showTable: true)
+        handleViews(showTable: false)
         
         loadData()
         
@@ -118,6 +118,8 @@ extension MovieListViewController {
     
     func loadData() {
         
+        ActivityIndicator().showIndicator(backgroundColor: nil, message: "Loading", indicatorColor: .white)
+        
         // set to true if config api returns success response
         // nil otherwise
         let configSuccessFlag = UserDefaults.standard.object(forKey: AppUserDefaults.RecievedConfigSucces) as? Bool
@@ -138,6 +140,7 @@ extension MovieListViewController {
     
     func getConfigurations(fromMovieListController: Bool = false) {
         APICalls().getConfigurations { (result) in
+            
             if let response = result {
                 
                 UserDefaults.standard.set(true, forKey: AppUserDefaults.RecievedConfigSucces)
@@ -146,6 +149,7 @@ extension MovieListViewController {
                 UserDefaults.standard.set(response.images.secureBaseURL, forKey: AppUserDefaults.ImageBaseURL)
                 self.getMovieList()
             } else {
+                ActivityIndicator().hideIndicator()
                 self.handleViews(showTable: false)
             }
         }
@@ -156,6 +160,7 @@ extension MovieListViewController {
         APICalls().getMovieList(pageNo: pageNo+1) { (result) in
             
             self.refreshControlbottom?.endRefreshing()
+            ActivityIndicator().hideIndicator()
             
             if let response = result {
                 
@@ -201,7 +206,7 @@ extension MovieListViewController {
     }
     
     func handleViews(showTable: Bool) {
-        if showTable && !self.tableViewMovies.isHidden {
+        if showTable  {
             self.tableViewMovies.isHidden = false
             self.vwNoData.isHidden = true
         } else {

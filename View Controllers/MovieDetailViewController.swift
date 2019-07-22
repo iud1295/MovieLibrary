@@ -22,6 +22,7 @@ class MovieDetailViewController: UIViewController {
                 let obj = movieDetailsObj.videos.results[0]
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
                 vc.key = obj.key
+                //self.present(vc, animated: true, completion: nil)
                 self.navigationController?.pushViewController(vc, animated: true)
             } else {
                 showToastMessage(messageString: "Video Unavailable!")
@@ -39,11 +40,10 @@ class MovieDetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        getMovieDetails()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getMovieDetails()
-        
         self.navigationController?.navigationBar.prefersLargeTitles = false
     }
     
@@ -56,7 +56,10 @@ extension MovieDetailViewController {
     }
     
     func getMovieDetails() {
+        ActivityIndicator().showIndicator(backgroundColor: nil, message: "Loading", indicatorColor: .white)
+        
         APICalls().getMovieDetails(id: id) { (result) in
+            ActivityIndicator().hideIndicator()
             if let response = result {
                 self.movieDetailsObj = response
                 self.loadData()
